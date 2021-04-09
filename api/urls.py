@@ -13,14 +13,16 @@ router.register(r'user', user_views.UserViewSet)
 router.register(r'country', country_views.CountryViewSet)
 router.register(r'port', country_views.PortViewSet)
 
-
 router.register(r'mode', mode_views.ModeViewSet)
 router.register(r'comodity', mode_views.ComodityViewSet)
 
-router.register(r'customer',customer_views.CustomerViewSet)
+router.register(r'customer', customer_views.CustomerViewSet)
+urlpatterns = format_suffix_patterns([
+	path('accounts/', include('rest_registration.api.urls'))
 
-urlpatterns = [
-    path('', include(router.urls))
-    # path('user/', user_views.UserViewSet),
-    # path('api-auth/', include('rest_framework.urls'))
+])
+
+urlpatterns += [
+	path('', include(router.urls)),
+	path('api-auth/', include('rest_framework.urls'))
 ]
