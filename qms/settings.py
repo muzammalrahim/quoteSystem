@@ -140,12 +140,13 @@ USE_L10N = True
 USE_TZ = True
 
 REST_FRAMEWORK = {
-	'DEFAULT_AUTHENTICATION_CLASSES': (
-		'rest_framework.authentication.TokenAuthentication',
-		'rest_framework.authentication.BasicAuthentication',
-	),
-	'DEFAULT_PERMISSION_CLASSES': (
-		'rest_framework.permissions.IsAuthenticated',)
+	# 'DEFAULT_AUTHENTICATION_CLASSES': (
+	# 	'rest_framework.authentication.TokenAuthentication',
+	# 	'rest_framework.authentication.BasicAuthentication',
+	# ),
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+	# 'DEFAULT_PERMISSION_CLASSES': (
+	# 	'rest_framework.permissions.IsAuthenticated',)
 }
 # User Auth Settings
 # ACCOUNT_USER_MODEL_USERNAME_FIELD = None
