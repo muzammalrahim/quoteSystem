@@ -12,4 +12,3 @@ class PortSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = models.Port
 		fields = '__all__'
-		depth = 1
