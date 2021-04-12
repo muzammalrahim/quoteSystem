@@ -50,10 +50,10 @@ INSTALLED_APPS = [
 	'drf_yasg',
 	'django.contrib.sites',
 	'allauth',
-	'user',
-	'country',
-	'mode',
-	'customer',
+	'user.apps.UserConfig',
+	'country.apps.CountryConfig',
+	'mode.apps.ModeConfig',
+	'customer.apps.CustomerConfig',
 ]
 
 MIDDLEWARE = [
@@ -140,13 +140,13 @@ USE_L10N = True
 USE_TZ = True
 
 REST_FRAMEWORK = {
-	# 'DEFAULT_AUTHENTICATION_CLASSES': (
-	# 	'rest_framework.authentication.TokenAuthentication',
-	# 	'rest_framework.authentication.BasicAuthentication',
-	# ),
-    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+	'DEFAULT_AUTHENTICATION_CLASSES': (
+		# 'rest_framework.authentication.TokenAuthentication',
+		# 'rest_framework.authentication.BasicAuthentication',
+	),
 	# 'DEFAULT_PERMISSION_CLASSES': (
-	# 	'rest_framework.permissions.IsAuthenticated',)
+	# 	# 'rest_framework.permissions.IsAuthenticated',)
+	'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
 # User Auth Settings
 # ACCOUNT_USER_MODEL_USERNAME_FIELD = None

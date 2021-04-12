@@ -18,7 +18,7 @@ class Country(models.Model):
 
 class Port(models.Model):
 	name = models.CharField(_('port name'), max_length=30, null=False, blank=False)
-	country = models.ForeignKey(Country, on_delete=models.CASCADE, null=False, blank=False)
+	country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True, blank=True)
 	created_at = models.DateField(blank=True, null=True, auto_now_add=True)
 	updated_at = models.DateField(blank=True, null=True, auto_now=True)
 
