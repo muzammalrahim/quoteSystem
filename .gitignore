@@ -110,15 +110,6 @@ ENV/
 # Ignore Django Migrations in Development if you are working on team
 
 # Only for Development only
-/country/migrations/*
-/customer/migrations/*
-/mode/migrations/*
-/user/migrations/*
-
-
-!/country/migrations/__init__.py
-!/customer/migrations/__init__.py
-!/mode/migrations/__init__.py
-!/user/migrations/__init__.py
-
- /.idea
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
