@@ -23,15 +23,10 @@ class ModeTests(APITestCase):
     def test_create_mode(self):
         url = reverse('mode-list')
         data = {'name': 'Australia'}
-        # client = APIClient()
-        # token = Token.objects.get(user__email='foo@bar.com')
-        # client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-        # self.user = client.login(email='foo@bar.com"', password='some_password')
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Mode.objects.count(), 1)
         self.assertEqual(Mode.objects.get().name, 'Australia')
-
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
