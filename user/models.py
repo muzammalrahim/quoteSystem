@@ -14,7 +14,7 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
-    # objects = UserManager()
+    objects = UserManager()
 
     class Meta:
         db_table = 'qms_user'

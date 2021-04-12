@@ -1,7 +1,9 @@
 from django.contrib import admin
 from . import models
 
+
 class CustomerAdmin(admin.ModelAdmin):
-    pass
+	pass
+
 
 admin.site.register(models.Customer, CustomerAdmin)
