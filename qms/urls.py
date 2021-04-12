@@ -12,9 +12,9 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
 	openapi.Info(
-		title="CMS API",
+		title="QMS API",
 		default_version='v1',
-		description="CMS Backend api",
+		description="QMS Backend api",
 		terms_of_service="https://www.google.com/policies/terms/",
 		contact=openapi.Contact(email="creative.joomdev@gmail.com"),
 		license=openapi.License(name="BSD License"),
