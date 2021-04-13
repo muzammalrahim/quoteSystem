@@ -5,12 +5,14 @@ from .serializers import CountrySerializer, PortSerializer
 from .models import Country, Port
 from user.models import User
 
+
 class CountryTests(APITestCase, URLPatternsTestCase):
     urlpatterns = [
         path('api/', include('api.urls')),
     ]
+
     def setUp(self):
-        user = User.objects.create(email='kami@gmail.com',password="demo")
+        user = User.objects.create(email='kami@gmail.com', password="demo")
         self.client.force_authenticate(user=user)
         Country.objects.create(
             name='Australia', code='AUS')
@@ -38,7 +40,7 @@ class CountryTests(APITestCase, URLPatternsTestCase):
         serializer = CountrySerializer(countries, many=True)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(countries.count(),4)
+        self.assertEqual(countries.count(), 4)
         print('Test get all Countries Passed!')
 
     def test_get_country_by_id(self):
@@ -46,13 +48,13 @@ class CountryTests(APITestCase, URLPatternsTestCase):
         url = '/api/country/' + str(country.id) + '/'
         response = self.client.get(url)
         serializer = CountrySerializer(country)
-        self.assertEqual(serializer.data,response.data)
+        self.assertEqual(serializer.data, response.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         print('Test get Country by id Passed!')
 
     def test_update_country(self):
         country = Country.objects.filter(name='Pakistan').first()
-        data = {"name":"England",'code':'ENG'}
+        data = {"name": "England", 'code': 'ENG'}
         url = '/api/country/' + str(country.id) + '/'
         response = self.client.put(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -63,7 +65,7 @@ class CountryTests(APITestCase, URLPatternsTestCase):
 
     def test_patch_country(self):
         country = Country.objects.create(name='Pakistan', code='IND')
-        data = {'code':'PK'}
+        data = {'code': 'PK'}
         url = '/api/country/' + str(country.id) + '/'
         response = self.client.patch(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -78,7 +80,7 @@ class CountryTests(APITestCase, URLPatternsTestCase):
         response = self.client.delete(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         total_after_delete = Country.objects.all().count()
-        print(total_before_delete,total_after_delete)
+        print(total_before_delete, total_after_delete)
         self.assertEqual(total_before_delete, total_after_delete + 1)
         print('Test delete Country Passed!')
 
@@ -89,12 +91,13 @@ class PortTests(APITestCase, URLPatternsTestCase):
     urlpatterns = [
         path('api/', include('api.urls')),
     ]
+
     def setUp(self):
-        user = User.objects.create(email='kami@gmail.com',password="demo")
+        user = User.objects.create(email='kami@gmail.com', password="demo")
         self.client.force_authenticate(user=user)
-        india=Country.objects.create(
+        india = Country.objects.create(
             name='India', code='IND')
-        pakistan=Country.objects.create(
+        pakistan = Country.objects.create(
             name='Pakistan', code='PK')
 
         Port.objects.create(
@@ -111,7 +114,7 @@ class PortTests(APITestCase, URLPatternsTestCase):
         response = self.client.post('/api/port/', port, format='json')
         total_after_create = Port.objects.count()
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(total_before_create, total_after_create -1)
+        self.assertEqual(total_before_create, total_after_create - 1)
         print('Test create Port successful!')
 
     def test_get_all_ports(self):
@@ -121,7 +124,7 @@ class PortTests(APITestCase, URLPatternsTestCase):
         serializer = PortSerializer(ports, many=True)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(ports.count(),2)
+        self.assertEqual(ports.count(), 2)
         print('Test retrieve all Ports successful!')
 
     def test_get_port_by_id(self):
@@ -130,14 +133,14 @@ class PortTests(APITestCase, URLPatternsTestCase):
         response = self.client.get(url)
         serializer = PortSerializer(port)
         self.assertEqual(serializer.data['name'], response.data['name'])
-        self.assertEqual(serializer.data,response.data)
+        self.assertEqual(serializer.data, response.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         print('Test retrieve Port successful!')
 
     def test_update_port(self):
         port = Port.objects.filter(name='Mumbai Port').first()
         country = Country.objects.filter(name='India').first()
-        data = {"name":"Delhi Port", 'country':country.id}
+        data = {"name": "Delhi Port", 'country': country.id}
         url = '/api/port/' + str(port.id) + '/'
         response = self.client.put(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -149,7 +152,7 @@ class PortTests(APITestCase, URLPatternsTestCase):
     def test_patch_port(self):
         country = Country.objects.filter(name='Pakistan').first()
         port = Port.objects.create(name='Sindh Port', country=country)
-        data = {'name':'Port Qasim'}
+        data = {'name': 'Port Qasim'}
         url = '/api/port/' + str(port.id) + '/'
         response = self.client.patch(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)

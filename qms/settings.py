@@ -14,9 +14,9 @@ from pathlib import Path
 import environ, os
 
 env = environ.Env(
-	# set casting, default value
-	# ALLOWED_HOSTS=(list, []),
-	DEBUG=(bool, False)
+    # set casting, default value
+    # ALLOWED_HOSTS=(list, []),
+    DEBUG=(bool, False)
 )
 environ.Env.read_env()
 
@@ -39,49 +39,49 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-	'django.contrib.admin',
-	'django.contrib.auth',
-	'django.contrib.contenttypes',
-	'django.contrib.sessions',
-	'django.contrib.messages',
-	'django.contrib.staticfiles',
-	'rest_framework',
-	'rest_framework.authtoken',
-	'drf_yasg',
-	'django.contrib.sites',
-	'allauth',
-	'user.apps.UserConfig',
-	'country.apps.CountryConfig',
-	'mode.apps.ModeConfig',
-	'customer.apps.CustomerConfig',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'drf_yasg',
+    'django.contrib.sites',
+    'allauth',
+    'user.apps.UserConfig',
+    'country.apps.CountryConfig',
+    'mode.apps.ModeConfig',
+    'customer.apps.CustomerConfig',
 ]
 
 MIDDLEWARE = [
-	'django.middleware.security.SecurityMiddleware',
-	'django.contrib.sessions.middleware.SessionMiddleware',
-	'django.middleware.common.CommonMiddleware',
-	'django.middleware.csrf.CsrfViewMiddleware',
-	'django.contrib.auth.middleware.AuthenticationMiddleware',
-	'django.contrib.messages.middleware.MessageMiddleware',
-	'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'qms.urls'
 
 TEMPLATES = [
-	{
-		'BACKEND': 'django.template.backends.django.DjangoTemplates',
-		'DIRS': [],
-		'APP_DIRS': True,
-		'OPTIONS': {
-			'context_processors': [
-				'django.template.context_processors.debug',
-				'django.template.context_processors.request',
-				'django.contrib.auth.context_processors.auth',
-				'django.contrib.messages.context_processors.messages',
-			],
-		},
-	},
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
 ]
 
 WSGI_APPLICATION = 'qms.wsgi.application'
@@ -99,31 +99,31 @@ AUTH_USER_MODEL = 'user.User'
 # }
 
 DATABASES = {
-	'default': {
-		'ENGINE': 'django.db.backends.mysql',
-		'NAME': env('DB_NAME'),
-		'USER': env('DB_USER'),
-		'PASSWORD': env('DB_PASSWORD'),
-		'HOST': env('DB_HOST'),
-	}
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+    }
 }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-	{
-		'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-	},
-	{
-		'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-	},
-	{
-		'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-	},
-	{
-		'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-	},
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
 ]
 
 # Internationalization
@@ -140,13 +140,13 @@ USE_L10N = True
 USE_TZ = True
 
 REST_FRAMEWORK = {
-	'DEFAULT_AUTHENTICATION_CLASSES': (
-		'rest_framework.authentication.TokenAuthentication',
-		'rest_framework.authentication.BasicAuthentication',
-	),
-	'DEFAULT_PERMISSION_CLASSES': (
-	'rest_framework.permissions.IsAuthenticated',),
-	'TEST_REQUEST_DEFAULT_FORMAT': 'json'
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',),
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
 # User Auth Settings
 # ACCOUNT_USER_MODEL_USERNAME_FIELD = None
@@ -160,26 +160,26 @@ REST_FRAMEWORK = {
 # ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/?verification=1'
 
 REST_REGISTRATION = {
-	'REGISTER_VERIFICATION_ENABLED': False,
-	'RESET_PASSWORD_VERIFICATION_ENABLED': False,
-	'REGISTER_EMAIL_VERIFICATION_ENABLED': False,
+    'REGISTER_VERIFICATION_ENABLED': False,
+    'RESET_PASSWORD_VERIFICATION_ENABLED': False,
+    'REGISTER_EMAIL_VERIFICATION_ENABLED': False,
 
-	'REGISTER_VERIFICATION_URL': 'https://frontend-host/verify-user/',
-	'RESET_PASSWORD_VERIFICATION_URL': 'https://frontend-host/reset-password/',
-	'REGISTER_EMAIL_VERIFICATION_URL': 'https://frontend-host/verify-email/',
+    'REGISTER_VERIFICATION_URL': 'https://frontend-host/verify-user/',
+    'RESET_PASSWORD_VERIFICATION_URL': 'https://frontend-host/reset-password/',
+    'REGISTER_EMAIL_VERIFICATION_URL': 'https://frontend-host/verify-email/',
 
-	'VERIFICATION_FROM_EMAIL': 'no-reply@example.com',
+    'VERIFICATION_FROM_EMAIL': 'no-reply@example.com',
 }
 SITE_ID = 1
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 SWAGGER_SETTINGS = {
-	'SECURITY_DEFINITIONS': {
-		'basic': {
-			'type': 'basic'
-		}
-	},
-	'USE_SESSION_AUTH': False,
+    'SECURITY_DEFINITIONS': {
+        'basic': {
+            'type': 'basic'
+        }
+    },
+    'USE_SESSION_AUTH': False,
 
 }
 # Static files (CSS, JavaScript, Images)

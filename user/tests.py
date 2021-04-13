@@ -23,13 +23,12 @@ class RegisterUserTest(APITestCase):
             "password": "somexpassword",
             "activated": True
         }
-        response = self.client.post(self.create_url,data, format='json')
+        response = self.client.post(self.create_url, data, format='json')
 
         self.assertEqual(User.objects.count(), 2)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data['email'], data['email'])
         print('Test create user successful!')
-
 
     def test_user_login(self):
         response = self.client.login(email='testuser@gmail.com', password='testpassword')
@@ -41,6 +40,3 @@ class RegisterUserTest(APITestCase):
         response = self.client.logout()
         self.assertEqual(response, None)
         print('Test logout user successful!')
-
-
-
