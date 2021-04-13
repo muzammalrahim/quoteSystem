@@ -1,14 +1,20 @@
-# from django.test import TestCase
-# from rest_framework.test import APITestCase
-# from user.models import User
-#
-#
-# # Create your tests here.
-# class RegisterUserTest(APITestCase):
-#     def setUp(self):
-#         self.test_user = User.objects.create_user('testuser@gmail.com', 'testpassword')
-#         self.create_url = reverse('account-create')
-#     def test_create_user(self):
-#         data = {
-#             "email" : "foxxobar@gmail.com"
-#         }
+from rest_framework import permissions
+from django.urls import include, path, reverse
+from rest_framework.test import APITestCase, URLPatternsTestCase
+from .serializers import UserSerializer
+from .models import User
+
+class CustomerTests(APITestCase, URLPatternsTestCase):
+    permissions_classes = [permissions.AllowAny,]
+    urlpatterns = [
+        path('api/', include('api.urls')),
+    ]
+    def setUp(self):
+        User.objects.create(
+            email='kamranatta@gmail.com')
+        User.objects.create(
+            email='kamran@gmail.com')
+        user = {'email':'kamrangahk@gmail.com', "password":''}
+        user = self.client.post()
+
+
