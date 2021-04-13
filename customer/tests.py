@@ -3,12 +3,15 @@ from django.urls import include, path, reverse
 from rest_framework.test import APITestCase, URLPatternsTestCase
 from .serializers import CustomerSerializer
 from .models import Customer
+from user.models import User
 
 class CustomerTests(APITestCase, URLPatternsTestCase):
     urlpatterns = [
         path('api/', include('api.urls')),
     ]
     def setUp(self):
+        user = User.objects.create(email='kami@gmail.com',password="demo")
+        self.client.force_authenticate(user=user)
         Customer.objects.create(
             email='atta@gmail.com',name='Atta', phone='36584796854')
         Customer.objects.create(
@@ -27,6 +30,7 @@ class CustomerTests(APITestCase, URLPatternsTestCase):
         serializer = CustomerSerializer(customer)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(Customer.objects.count(), 4)
+        print('Test create customer passed!!')
 
     def test_get_all_customers(self):
         response = self.client.get(reverse('customer-list'))
@@ -36,6 +40,7 @@ class CustomerTests(APITestCase, URLPatternsTestCase):
         serializer = CustomerSerializer(customers, many=True)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(customers.count(),3)
+        print('Test get all customers passed!!')
 
     def test_get_customer_by_id(self):
         customer = Customer.objects.filter(email='atta@gmail.com').first()
@@ -44,6 +49,7 @@ class CustomerTests(APITestCase, URLPatternsTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         serializer = CustomerSerializer(customer)
         self.assertEqual(serializer.data,response.data)
+        print('Test get customer by id passed!!')
 
     def test_update_customer(self):
         customer = Customer.objects.filter(name='Gahk').first()
@@ -54,6 +60,7 @@ class CustomerTests(APITestCase, URLPatternsTestCase):
         self.assertEqual(response.data['name'], 'Kamran Atta')
         self.assertEqual(response.data['email'], 'attagahk@gmail.com')
         self.assertEqual(response.data['phone'], '88888888888')
+        print('Test update customer passed!!')
 
     def test_patch_customer(self):
         customer = Customer.objects.create(email='kamal@gmail.com',name='Kamran', phone='22222222222')
@@ -65,6 +72,7 @@ class CustomerTests(APITestCase, URLPatternsTestCase):
         self.assertEqual(response.data['email'], 'kamal@gmail.com')
         self.assertEqual(response.data['phone'], '22222222222')
         self.assertEqual(Customer.objects.all().count(), 4)
+        print('Test patch customer passed!!')
 
     def test_delete_customer(self):
         customer = Customer.objects.filter(email='atta@gmail.com').first()
@@ -75,5 +83,5 @@ class CustomerTests(APITestCase, URLPatternsTestCase):
         total_after_delete = Customer.objects.all().count()
         print(total_before_delete,total_after_delete)
         self.assertEqual(total_before_delete, total_after_delete + 1)
-
+        print('Test delete customer passed!!')
 
