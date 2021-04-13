@@ -29,15 +29,13 @@ class RegisterUserTest(APITestCase):
 
 
     def test_user_login(self):
-        data = {
-            'email': 'testuser@gmail.com',
-            'password': 'testpassword'
-        }
-
-        response = self.client.post(self.create_url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        response = self.client.login(email='testuser@gmail.com', password='testpassword')
+        self.assertEqual(response, True)
         self.assertEqual(User.objects.count(), 1)
-        self.assertEqual(len(response.data['email']), 1)
+
+    def test_user_logout(self):
+        response = self.client.logout()
+        self.assertEqual(response, True)
 
 
 
