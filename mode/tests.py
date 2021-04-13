@@ -8,17 +8,9 @@ from user.models import User
 
 
 class ModeTests(APITestCase):
-    # def setUp(self):
-    #     self.password = 'test'
-    #     self.email = 'admin@mgmail.com'
-    #
-    #     self.user = User.objects.create(self.email, self.password)
-    #
-    #     self.client = APIClient()
-    #     self.client.force_authenticate(email=self.email, password=self.password)
-    # urlpatterns = [
-    #     path('api/', include('api.urls')),
-    # ]
+    def setUp(self):
+        user = User.objects.create(email='kami@gmail.com',password="demo")
+        self.client.force_authenticate(user=user)
 
     def test_create_mode(self):
         url = reverse('mode-list')
@@ -30,6 +22,7 @@ class ModeTests(APITestCase):
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
+        print('Test create Mode Passed!')
 
     def test_get_all_mode(self):
         url = reverse('mode-list')
@@ -39,12 +32,14 @@ class ModeTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Mode.objects.count(), 1)
         self.assertEqual(list_id, 3)
+        print('Test get all Modes Passed!')
 
     def test_delete_mode(self):
         mode = Mode.objects.create(name='Australia')
         url = '/api/mode/' + str(mode.id) + '/'
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        print('Test delete Mode Passed!')
 
     def test_patch_mode(self):
         mode = Mode.objects.create(name='Pakistan')
@@ -54,3 +49,4 @@ class ModeTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['name'], 'jjjjj')
         self.assertEqual(Mode.objects.all().count(), 1)
+        print('Test patch Mode Passed!')
