@@ -3,7 +3,7 @@ from . import models
 
 
 class CountrySerializer(serializers.ModelSerializer):
-	id = serializers.IntegerField()
+	# id = serializers.IntegerField()
 	class Meta:
 		model = models.Country
 		fields = '__all__'
