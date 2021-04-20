@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'country.apps.CountryConfig',
     'mode.apps.ModeConfig',
     'customer.apps.CustomerConfig',
+    'quote.apps.QuoteConfig',
+
 ]
 
 MIDDLEWARE = [

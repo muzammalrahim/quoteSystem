@@ -5,10 +5,13 @@ from country import views as country_views
 from mode import views as mode_views
 from customer import views as customer_views
 from user import views as user_views
+from quote import views as quote_view
 
 router = DefaultRouter()
 
 router.register(r'user', user_views.UserViewSet)
+
+router.register(r'quote_view', quote_view.QuoteViewSet)
 
 router.register(r'country', country_views.CountryViewSet)
 router.register(r'port', country_views.PortViewSet)
@@ -17,12 +20,13 @@ router.register(r'mode', mode_views.ModeViewSet)
 router.register(r'comodity', mode_views.ComodityViewSet)
 
 router.register(r'customer', customer_views.CustomerViewSet)
+
 urlpatterns = format_suffix_patterns([
-	path('accounts/', include('rest_registration.api.urls'))
+    path('accounts/', include('rest_registration.api.urls'))
 
 ])
 
 urlpatterns += [
-	path('', include(router.urls)),
-	path('api-auth/', include('rest_framework.urls'))
+    path('', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls'))
 ]
