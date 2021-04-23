@@ -1,12 +1,15 @@
 from rest_framework import serializers
 from country.serializers import PortSerializer
-from mode.serializers import ComoditySerializer
+from mode.serializers import CommoditySerializer, ModeSerializer, CarrierSerializer
 from .models import Quote
 
 
 class QuoteSerializer(serializers.ModelSerializer):
-    comodity = ComoditySerializer(read_only=True)
-    port = PortSerializer(read_only=True)
+    # commodity = CommoditySerializer(read_only=True)
+    # origin = PortSerializer(read_only=True)
+    # destination = PortSerializer(read_only=True)
+    # mode = ModeSerializer(read_only=True)
+    # carrier = CarrierSerializer(read_only=True)
 
     class Meta:
         model = Quote
