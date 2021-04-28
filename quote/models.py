@@ -8,7 +8,7 @@ class Quote(models.Model):
         ('KG', 'KG'),
         ('G', 'G'),
     )
-    weigth_type = models.CharField(max_length=100, blank=True, null=True, choices=weight_choice)
+    weight_type= models.CharField(max_length=100, blank=True, null=True, choices=weight_choice)
     weight = models.FloatField(null=True, blank=True)
     goods_value = models.IntegerField(blank=True, null=True)
     volume_choice = (
