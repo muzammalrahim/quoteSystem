@@ -1,6 +1,17 @@
-from .models import Quote
+from . import models
 from rest_framework import viewsets
-from .serializers import QuoteSerializer
+from . import serializers
+
+
+class QuoteViewSet(viewsets.ModelViewSet):
+    queryset = models.Quote.objects.all()
+    serializer_class = serializers.QuoteSerializer
+
+
+class CompanyBaseTariffViewSet(viewsets.ModelViewSet):
+    queryset = models.CompanyBaseTariff.objects.all()
+    serializer_class = serializers.CompanyBaseTariffSerializer
+
 # from rest_framework.decorators import api_view
 #
 # from country import serializers
@@ -27,6 +38,3 @@ from .serializers import QuoteSerializer
 #
 #     }
 #     return Response(content)
-class QuoteViewSet(viewsets.ModelViewSet):
-    queryset = Quote.objects.all()
-    serializer_class = QuoteSerializer

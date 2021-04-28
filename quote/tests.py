@@ -2,7 +2,7 @@ from rest_framework.test import APITestCase, URLPatternsTestCase
 from django.urls import include, path, reverse
 from rest_framework import status
 from country.models import Port
-from mode.models import Comodity
+from mode.tests import Commodity
 from quote.models import Quote
 from quote.serializers import QuoteSerializer
 from user.models import User
@@ -16,7 +16,7 @@ class QuoteTests(APITestCase, URLPatternsTestCase):
     def setUp(self):
         user = User.objects.create(email='kami@gmail.com', password="demo")
         self.client.force_authenticate(user=user)
-        comodity = Comodity.objects.create(
+        comodity = Commodity.objects.create(
             name='comodity')
         port = Port.objects.create(
             name='Gawadar')
@@ -24,7 +24,7 @@ class QuoteTests(APITestCase, URLPatternsTestCase):
 
     def test_create_quote(self):
         url = reverse('quote-list')
-        quote = {'name': 'quottt', 'comodity': (Comodity.objects.filter(name='comodity').first()).id
+        quote = {'name': 'quottt', 'comodity': (Commodity.objects.filter(name='comodity').first()).id
             , 'port': (Port.objects.filter(name='Gawadar').first()).id}
         total_before_create = Quote.objects.count()
         response = self.client.post(url, quote, format='json')
@@ -55,7 +55,7 @@ class QuoteTests(APITestCase, URLPatternsTestCase):
 
     def test_update_quote(self):
         quote = Quote.objects.filter(name='first').first()
-        comodity = Comodity.objects.filter(name='comodity').first()
+        comodity = Commodity.objects.filter(name='comodity').first()
         port = Port.objects.filter(name='Gawadar').first()
         data = {"name": "comodity update", 'comodity': comodity.id, 'port': port.id}
         url = '/api/quote_view/' + str(quote.id) + '/'
@@ -68,7 +68,7 @@ class QuoteTests(APITestCase, URLPatternsTestCase):
         print('Test update Quote successful!')
 
     def test_patch_quote(self):
-        comodity = Comodity.objects.filter(name='comodity').first()
+        comodity = Commodity.objects.filter(name='comodity').first()
         quote = Quote.objects.create(name='first', comodity=comodity)
         data = {'name': 'Port Qasim'}
         url = '/api/quote_view/' + str(quote.id) + '/'

@@ -1,4 +1,5 @@
 from django.contrib import admin
-from quote.models import Quote
+from . import models
 
-admin.site.register(Quote)
+admin.site.register(models.Quote)
+admin.site.register(models.CompanyBaseTariff)

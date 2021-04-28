@@ -16,3 +16,14 @@ class CommodityViewSet(viewsets.ModelViewSet):
 class CarrierViewSet(viewsets.ModelViewSet):
     queryset = models.Carrier.objects.all()
     serializer_class = serializers.CarrierSerializer
+
+
+class CalculatorViewSet(viewsets.ModelViewSet):
+    queryset = models.Calculator.objects.all()
+    serializer_class = serializers.CalculatorSerializer
+
+
+class ChargeCodeViewSet(viewsets.ModelViewSet):
+    queryset = models.ChargeCode.objects.all()
+    serializer_class = serializers.ChargeCodeSerializer
+

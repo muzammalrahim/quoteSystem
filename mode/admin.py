@@ -10,3 +10,5 @@ from . import models
 admin.site.register(models.Mode)
 admin.site.register(models.Commodity)
 admin.site.register(models.Carrier)
+admin.site.register(models.Calculator)
+admin.site.register(models.ChargeCode)
