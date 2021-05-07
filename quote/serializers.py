@@ -10,6 +10,15 @@ class QuoteSerializer(serializers.ModelSerializer):
     # destination = PortSerializer(read_only=True)
     # mode = ModeSerializer(read_only=True)
     # carrier = CarrierSerializer(read_only=True)
+    def to_representation(self, instance):
+        representation = super(QuoteSerializer, self).to_representation(instance)
+        representation['commodity'] = CommoditySerializer(instance.commodity).data
+        representation['origin'] = PortSerializer(instance.origin).data
+        representation['destination'] = PortSerializer(instance.origin).data
+        representation['mode'] = ModeSerializer(instance.mode).data
+        representation['carrier'] = CarrierSerializer(instance.carrier).data
+
+        return representation
 
     class Meta:
         model = models.Quote

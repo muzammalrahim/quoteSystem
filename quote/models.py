@@ -1,6 +1,5 @@
 from django.db import models
-from country.models import Port
-
+from django.utils import timezone
 
 class Quote(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
@@ -8,7 +7,7 @@ class Quote(models.Model):
         ('KG', 'KG'),
         ('G', 'G'),
     )
-    weight_type= models.CharField(max_length=100, blank=True, null=True, choices=weight_choice)
+    weight_type = models.CharField(max_length=100, blank=True, null=True, choices=weight_choice)
     weight = models.FloatField(null=True, blank=True)
     goods_value = models.IntegerField(blank=True, null=True)
     volume_choice = (
@@ -25,16 +24,16 @@ class Quote(models.Model):
     carrier = models.ForeignKey("mode.Carrier", on_delete=models.SET_NULL, blank=True,
                                 null=True)
 
-    origin = models.ForeignKey(Port, on_delete=models.SET_NULL, blank=True,
+    origin = models.ForeignKey("country.Port", on_delete=models.SET_NULL, blank=True,
                                null=True, related_name='origin_port')
-    destination = models.ForeignKey(Port, on_delete=models.SET_NULL, blank=True,
+    destination = models.ForeignKey("country.Port", on_delete=models.SET_NULL, blank=True,
                                     null=True, related_name='destination_port')
 
 
 class CompanyBaseTariff(models.Model):
-    origin = models.ForeignKey(Port, on_delete=models.SET_NULL, blank=True,
+    origin = models.ForeignKey("country.Port", on_delete=models.SET_NULL, blank=True,
                                null=True, related_name='cbt_origin_port')
-    destination = models.ForeignKey(Port, on_delete=models.SET_NULL, blank=True,
+    destination = models.ForeignKey("country.Port", on_delete=models.SET_NULL, blank=True,
                                     null=True, related_name='cbt_destination_port')
     mode = models.ForeignKey("mode.Mode", on_delete=models.SET_NULL, blank=True,
                              null=True)
@@ -83,9 +82,18 @@ class CompanyBaseTariff(models.Model):
     )
     frequency_unit = models.CharField(max_length=100, blank=True, null=True, choices=frequency_unit_choice)
     start_date = models.DateField(blank=True, null=True, auto_now_add=True)
+
     # charge_code = models.ForeignKey(ChargeCode, on_delete=models.SET_NULL, blank=True, null=True)
 
-    # def save(self,*args,**kwargs):
-    #     if not self.id:
-    #         self.start_date = timezone.now()
-    #     return super(CompanyBaseTariff, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.start_date = timezone.now()
+        return super(CompanyBaseTariff, self).save(*args, **kwargs)
+
+    # @admin.display(ordering='first_name')
+    # def colored_first_name(self):
+    #     return format_html(
+    #         '<span style="color: #{};">{}</span>',
+    #         self.frequency_unit,
+    #         self.frequency,
+    #     )

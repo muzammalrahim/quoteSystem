@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from mode.models import ChargeCode
 
 
 class Country(models.Model):
@@ -17,14 +18,15 @@ class Country(models.Model):
 
 
 class Port(models.Model):
-    code = models.CharField(_('code'), max_length=30, null=True, blank=True)
+    name = models.CharField(_('name'), max_length=30, null=True, blank=True)
     description = models.TextField(max_length=200, blank=True, null=True)
     country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True, blank=True)
+    charge_code = models.ManyToManyField(ChargeCode)
     created_at = models.DateField(blank=True, null=True, auto_now_add=True)
     updated_at = models.DateField(blank=True, null=True, auto_now=True)
 
     class Meta:
         db_table = 'qms_port'
-    #
-    # def __str__(self):
-    #     return str(self.name)
+
+    def __str__(self):
+        return str(self.name)

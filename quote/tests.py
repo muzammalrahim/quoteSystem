@@ -18,14 +18,13 @@ class QuoteTests(APITestCase, URLPatternsTestCase):
         self.client.force_authenticate(user=user)
         comodity = Commodity.objects.create(
             name='comodity')
-        port = Port.objects.create(
-            name='Gawadar')
-        Quote.objects.create(name='first', comodity=comodity, port=port)
+        # port = Port.objects.create(
+        #     name='Gawadar')
+        Quote.objects.create(name='first', commodity=comodity)
 
     def test_create_quote(self):
         url = reverse('quote-list')
-        quote = {'name': 'quottt', 'comodity': (Commodity.objects.filter(name='comodity').first()).id
-            , 'port': (Port.objects.filter(name='Gawadar').first()).id}
+        quote = {'name': 'quottt', 'comodity': (Commodity.objects.filter(name='comodity').first()).id}
         total_before_create = Quote.objects.count()
         response = self.client.post(url, quote, format='json')
         total_after_create = Quote.objects.count()
@@ -56,8 +55,8 @@ class QuoteTests(APITestCase, URLPatternsTestCase):
     def test_update_quote(self):
         quote = Quote.objects.filter(name='first').first()
         comodity = Commodity.objects.filter(name='comodity').first()
-        port = Port.objects.filter(name='Gawadar').first()
-        data = {"name": "comodity update", 'comodity': comodity.id, 'port': port.id}
+        # port = Port.objects.filter(name='Gawadar').first()
+        data = {"name": "comodity update", 'comodity': comodity.id}
         url = '/api/quote_view/' + str(quote.id) + '/'
         response = self.client.put(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -69,7 +68,7 @@ class QuoteTests(APITestCase, URLPatternsTestCase):
 
     def test_patch_quote(self):
         comodity = Commodity.objects.filter(name='comodity').first()
-        quote = Quote.objects.create(name='first', comodity=comodity)
+        quote = Quote.objects.create(name='first', commodity=comodity)
         data = {'name': 'Port Qasim'}
         url = '/api/quote_view/' + str(quote.id) + '/'
         response = self.client.patch(url, data, format='json')

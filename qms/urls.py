@@ -23,7 +23,9 @@ schema_view = get_schema_view(
 	public=True,
 	permission_classes=(permissions.AllowAny,),
 )
-
+admin.site.site_header = 'QMS'
+admin.site.site_title = 'Welcome to the QMS Portal'
+admin.site.index_title = 'Welocme to the QMS Dashboard'
 urlpatterns = [
 	path('admin/', admin.site.urls),
 	url(r'^swagger(?P<format>\.json|\.yaml)$',

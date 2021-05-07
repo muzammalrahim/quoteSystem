@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import environ, os
-
+from typing import List
 env = environ.Env(
     # set casting, default value
     # ALLOWED_HOSTS=(list, []),
@@ -28,13 +28,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
+
+SITE_URL = env('SITE_URL')
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-01h53y1=ck7f4%dn^pn!_#4i1cu!31@+15%3t=2^+oc260xa*%'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS: List[str] = env('ALLOWED_HOSTS')
 
 # Application definition
 
@@ -73,7 +75,7 @@ ROOT_URLCONF = 'qms.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -89,16 +91,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'qms.wsgi.application'
 
 AUTH_USER_MODEL = 'user.User'
-
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 DATABASES = {
     'default': {
@@ -150,27 +142,18 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',),
     'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
-# User Auth Settings
-# ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-# ACCOUNT_EMAIL_REQUIRED = True
-# ACCOUNT_UNIQUE_EMAIL = True
-# ACCOUNT_USERNAME_REQUIRED = False
-# ACCOUNT_AUTHENTICATION_METHOD = 'email'
-# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-# ACCOUNT_CONFIRM_EMAIL_ON_GET = True
-# ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/?verification=1'
-# ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/?verification=1'
+
 
 REST_REGISTRATION = {
     'REGISTER_VERIFICATION_ENABLED': False,
     'RESET_PASSWORD_VERIFICATION_ENABLED': False,
     'REGISTER_EMAIL_VERIFICATION_ENABLED': False,
 
-    'REGISTER_VERIFICATION_URL': 'https://frontend-host/verify-user/',
-    'RESET_PASSWORD_VERIFICATION_URL': 'https://frontend-host/reset-password/',
-    'REGISTER_EMAIL_VERIFICATION_URL': 'https://frontend-host/verify-email/',
+    # 'REGISTER_VERIFICATION_URL': '{}/verify-user/'.format(SITE_URL),
+    # 'RESET_PASSWORD_VERIFICATION_URL': '{}/reset-password/'.format(SITE_URL),
+    # 'REGISTER_EMAIL_VERIFICATION_URL': '{}/verify-email/'.format(SITE_URL),
 
-    'VERIFICATION_FROM_EMAIL': 'no-reply@example.com',
+    # 'VERIFICATION_FROM_EMAIL': 'no-reply@example.com',
 }
 SITE_ID = 1
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -188,7 +171,8 @@ SWAGGER_SETTINGS = {
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
+STATICFILES_DIR =(os.path.join(BASE_DIR, 'static'),)
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 

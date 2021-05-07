@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from country.models import Port
 from . import models
 
 
@@ -31,6 +33,11 @@ class ChargeCodeSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         representation = super(ChargeCodeSerializer, self).to_representation(instance)
         representation['calculator'] = CalculatorSerializer(instance.calculator).data
+        # try:
+        #     represe = Port.objects.filter(charge_code=instance.id).values()
+        #     representation['port'] = represe
+        # except:
+        #     representation['port'] = None
         return representation
 
     class Meta:

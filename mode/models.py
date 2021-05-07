@@ -10,15 +10,19 @@ class Mode(models.Model):
     created_at = models.DateField(blank=True, null=True, auto_now_add=True)
     updated_at = models.DateField(blank=True, null=True, auto_now=True)
 
+    # def __str__(self):
+    #     return f"{self.name}" \
+    # f", {self.description}"
+
     class Meta:
         db_table = 'qms_mode'
-    #
-    # def __str__(self):
-    #     return str(self.name)
+
+    def __str__(self):
+        return self.name
 
 
 class Commodity(models.Model):
-    code = models.CharField(_('code'), max_length=30, null=False, blank=False)
+    name = models.CharField(_('code'), max_length=30, null=False, blank=False)
     description = models.TextField(max_length=200, blank=True, null=True)
     created_at = models.DateField(blank=True, null=True, auto_now_add=True)
     updated_at = models.DateField(blank=True, null=True, auto_now=True)
@@ -26,14 +30,20 @@ class Commodity(models.Model):
     class Meta:
         db_table = 'qms_comodity'
         verbose_name = 'Comoditie'
-    #
-    # def __str__(self):
-    #     return str(self.name)
+
+    def __str__(self):
+        return str(self.name)
 
 
 class Carrier(models.Model):
     code = models.CharField(_('code'), max_length=30, null=False, blank=False)
     description = models.TextField(max_length=200, blank=True, null=True)
+
+    # def __unicode__(self):
+    #     return self.code
+
+    def __str__(self):
+        return str(self.code)
 
 
 class Calculator(models.Model):
@@ -47,8 +57,3 @@ class ChargeCode(models.Model):
     local_description = models.TextField(max_length=200, blank=True, null=True)
     company_base_tariff = models.ForeignKey(CompanyBaseTariff, on_delete=models.SET_NULL, blank=True, null=True)
     calculator = models.ForeignKey(Calculator, on_delete=models.SET_NULL, blank=True, null=True)
-
-
-
-
-

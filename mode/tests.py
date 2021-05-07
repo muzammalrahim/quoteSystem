@@ -100,7 +100,7 @@ class ComodityTests(APITestCase, URLPatternsTestCase):
             name='Sri lanka')
 
     def test_create_comodity(self):
-        url = reverse('comodity-list')
+        url = reverse('commodity-list')
         data = {'name': 'Australia'}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -109,7 +109,7 @@ class ComodityTests(APITestCase, URLPatternsTestCase):
         print("Test Create Comodity Passed")
 
     def test_get_all_comodity(self):
-        response = self.client.get(reverse('comodity-list'))
+        response = self.client.get(reverse('commodity-list'))
         comodity = Commodity.objects.all()
         serializer = CommoditySerializer(comodity, many=True)
         self.assertEqual(response.data, serializer.data)
@@ -119,7 +119,7 @@ class ComodityTests(APITestCase, URLPatternsTestCase):
 
     def test_get_comodity_by_id(self):
         comodity = Commodity.objects.filter(name='India').first()
-        url = '/api/comodity/' + str(comodity.id) + '/'
+        url = '/api/commodity/' + str(comodity.id) + '/'
         response = self.client.get(url)
         serializer = CommoditySerializer(comodity)
         self.assertEqual(serializer.data, response.data)
@@ -129,7 +129,7 @@ class ComodityTests(APITestCase, URLPatternsTestCase):
     def test_update_comodity(self):
         comodity = Commodity.objects.filter(name='India').first()
         data = {"name": "eengsss"}
-        url = '/api/comodity/' + str(comodity.id) + '/'
+        url = '/api/commodity/' + str(comodity.id) + '/'
         response = self.client.put(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['name'], 'eengsss')
@@ -139,7 +139,7 @@ class ComodityTests(APITestCase, URLPatternsTestCase):
     def test_patch_comodity(self):
         comodity = Commodity.objects.create(name="england")
         data = {'name': 'englanssss'}
-        url = '/api/comodity/' + str(comodity.id) + '/'
+        url = '/api/commodity/' + str(comodity.id) + '/'
         response = self.client.patch(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['name'], 'englanssss')
@@ -148,226 +148,228 @@ class ComodityTests(APITestCase, URLPatternsTestCase):
 
     def test_delete_comodity(self):
         comodity = Commodity.objects.create(name="england")
-        url = '/api/comodity/' + str(comodity.id) + '/'
+        url = '/api/commodity/' + str(comodity.id) + '/'
         response = self.client.delete(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         print("Test delete comodity passed")
 
 
-# class CarrierTests(APITestCase, URLPatternsTestCase):
-#     urlpatterns = [
-#         path('api/', include('api.urls')),
-#     ]
-# 
-#     def setUp(self):
-#         user = User.objects.create(email='kami@gmail.com', password="demo")
-#         self.client.force_authenticate(user=user)
-# 
-#         Carrier.objects.create(
-#             description='Australia')
-#         Carrier.objects.create(
-#             description='India')
-#         Carrier.objects.create(
-#             description='Pakistan')
-#         Carrier.objects.create(
-#             description='Sri lanka')
-# 
-#     def test_create_carrier(self):
-#         url = reverse('carrier-list')
-#         data = {'description': 'Australia'}
-#         response = self.client.post(url, data, format='json')
-#         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-#         self.assertEqual(Carrier.objects.count(), 5)
-#         # self.assertEqual(Comodity.objects.get().name, 'Australia')
-#         print("Test Create Comodity Passed")
-# 
-#     def test_get_all_carrier(self):
-#         response = self.client.get(reverse('comodity-list'))
-#         carrier = Carrier.objects.all()
-#         serializer = CarrierSerializer(carrier, many=True)
-#         self.assertEqual(response.data, serializer.data)
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         self.assertEqual(carrier.count(), 4)
-#         print("Test get all carrier passed")
-# 
-#     def test_get_carrier_by_id(self):
-#         carrier = Carrier.objects.filter(name='India').first()
-#         url = '/api/carrier/' + str(carrier.id) + '/'
-#         response = self.client.get(url)
-#         serializer = CarrierSerializer(carrier)
-#         self.assertEqual(serializer.data, response.data)
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         print("Test get comodity by id passed")
-# 
-#     def test_update_carrier(self):
-#         carrier = Carrier.objects.filter(name='India').first()
-#         data = {"name": "eengsss"}
-#         url = '/api/carrier/' + str(carrier.id) + '/'
-#         response = self.client.put(url, data, format='json')
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         self.assertEqual(response.data['name'], 'eengsss')
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         print("Test Update carrier")
-# 
-#     def test_patch_carrier(self):
-#         carrier = Carrier.objects.create(name="england")
-#         data = {'name': 'englanssss'}
-#         url = '/api/carrier/' + str(carrier.id) + '/'
-#         response = self.client.patch(url, data, format='json')
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         self.assertEqual(response.data['name'], 'englanssss')
-#         self.assertEqual(carrier.objects.all().count(), 5)
-#         print("Test Patch carrier Passed")
-# 
-#     def test_delete_carrier(self):
-#         carrier = Carrier.objects.create(name="england")
-#         url = '/api/carrier/' + str(carrier.id) + '/'
-#         response = self.client.delete(url, format='json')
-#         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-#         print("Test delete carrier passed")
-# 
-# 
-# class CalculatorTests(APITestCase, URLPatternsTestCase):
-#     urlpatterns = [
-#         path('api/', include('api.urls')),
-#     ]
-# 
-#     def setUp(self):
-#         user = User.objects.create(email='kami@gmail.com', password="demo")
-#         self.client.force_authenticate(user=user)
-# 
-#         Calculator.objects.create(
-#             name='Australia')
-#         Calculator.objects.create(
-#             name='India')
-#         Calculator.objects.create(
-#             name='Pakistan')
-#         Calculator.objects.create(
-#             name='Sri lanka')
-# 
-#     def test_create_calculator(self):
-#         url = reverse('calculator-list')
-#         data = {'name': 'Australia'}
-#         response = self.client.post(url, data, format='json')
-#         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-#         self.assertEqual(Commodity.objects.count(), 5)
-#         # self.assertEqual(Comodity.objects.get().name, 'Australia')
-#         print("Test Create  Passed")
-# 
-#     def test_get_all_calculator(self):
-#         response = self.client.get(reverse('calculator-list'))
-#         calculator = Calculator.objects.all()
-#         serializer = CalculatorSerializer(calculator, many=True)
-#         self.assertEqual(response.data, serializer.data)
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         self.assertEqual(calculator.count(), 4)
-#         print("Test get all Calculator passed")
-# 
-#     def test_get_calculator_by_id(self):
-#         calculator = Calculator.objects.filter(name='India').first()
-#         url = '/api/calculator/' + str(calculator.id) + '/'
-#         response = self.client.get(url)
-#         serializer = CalculatorSerializer(calculator)
-#         self.assertEqual(serializer.data, response.data)
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         print("Test get Calculator by id passed")
-# 
-#     def test_update_calculator(self):
-#         calculator = Calculator.objects.filter(name='India').first()
-#         data = {"name": "eengsss"}
-#         url = '/api/calculator/' + str(calculator.id) + '/'
-#         response = self.client.put(url, data, format='json')
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         self.assertEqual(response.data['name'], 'eengsss')
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         print("Test Update Calculator")
-# 
-#     def test_patch_calculator(self):
-#         calculator = Calculator.objects.create(name="england")
-#         data = {'name': 'englanssss'}
-#         url = '/api/calculator/' + str(calculator.id) + '/'
-#         response = self.client.patch(url, data, format='json')
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         self.assertEqual(response.data['name'], 'englanssss')
-#         self.assertEqual(Commodity.objects.all().count(), 5)
-#         print("Test Patch Calculator Passed")
-# 
-#     def test_delete_comodity(self):
-#         calculator = Calculator.objects.create(name="england")
-#         url = '/api/calculator/' + str(calculator.id) + '/'
-#         response = self.client.delete(url, format='json')
-#         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-#         print("Test delete calculator passed")
-# 
-# 
-# class ChargeCodeTests(APITestCase, URLPatternsTestCase):
-#     urlpatterns = [
-#         path('api/', include('api.urls')),
-#     ]
-# 
-#     def setUp(self):
-#         user = User.objects.create(email='kami@gmail.com', password="demo")
-#         self.client.force_authenticate(user=user)
-# 
-#         ChargeCode.objects.create(
-#             name='Australia')
-#         ChargeCode.objects.create(
-#             name='India')
-#         ChargeCode.objects.create(
-#             name='Pakistan')
-#         ChargeCode.objects.create(
-#             name='Sri lanka')
-# 
-#     def test_create_charge_code(self):
-#         url = reverse('charge_code-list')
-#         data = {'name': 'Australia'}
-#         response = self.client.post(url, data, format='json')
-#         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-#         self.assertEqual(ChargeCode.objects.count(), 5)
-#         # self.assertEqual(Comodity.objects.get().name, 'Australia')
-#         print("Test Create  Passed")
-# 
-#     def test_get_all_charge_code(self):
-#         response = self.client.get(reverse('charge_code-list'))
-#         charge_code = ChargeCode.objects.all()
-#         serializer = ChargeCodeSerializer(charge_code, many=True)
-#         self.assertEqual(response.data, serializer.data)
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         self.assertEqual(charge_code.count(), 4)
-#         print("Test get all ChargeCode passed")
-# 
-#     def test_get_charge_code_by_id(self):
-#         charge_code = ChargeCode.objects.filter(name='India').first()
-#         url = '/api/charge_code/' + str(charge_code.id) + '/'
-#         response = self.client.get(url)
-#         serializer = ChargeCodeSerializer(charge_code)
-#         self.assertEqual(serializer.data, response.data)
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         print("Test get charge_code by id passed")
-# 
-#     def test_update_charge_code(self):
-#         charge_code = ChargeCode.objects.filter(name='India').first()
-#         data = {"name": "eengsss"}
-#         url = '/api/charge_code/' + str(charge_code.id) + '/'
-#         response = self.client.put(url, data, format='json')
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         self.assertEqual(response.data['name'], 'eengsss')
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         print("Test Update charge_code")
-# 
-#     def test_patch_charge_code(self):
-#         charge_code = ChargeCode.objects.create(name="england")
-#         data = {'name': 'englanssss'}
-#         url = '/api/charge_code/' + str(charge_code.id) + '/'
-#         response = self.client.patch(url, data, format='json')
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         self.assertEqual(response.data['name'], 'englanssss')
-#         self.assertEqual(ChargeCode.objects.all().count(), 5)
-#         print("Test Patch Calculator Passed")
-# 
-#     def test_delete_charge_code(self):
-#         charge_code = ChargeCode.objects.create(name="england")
-#         url = '/api/charge_code/' + str(charge_code.id) + '/'
-#         response = self.client.delete(url, format='json')
-#         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-#         print("Test delete calculator passed")
+class CarrierTests(APITestCase, URLPatternsTestCase):
+    urlpatterns = [
+        path('api/', include('api.urls')),
+    ]
+
+    def setUp(self):
+        user = User.objects.create(email='kami@gmail.com', password="demo")
+        self.client.force_authenticate(user=user)
+
+        Carrier.objects.create(
+            description='Australia')
+        Carrier.objects.create(
+            description='India',
+            code='India',
+        )
+        Carrier.objects.create(
+            description='Pakistan')
+        Carrier.objects.create(
+            description='Sri lanka')
+
+    def test_create_carrier(self):
+        url = reverse('carrier-list')
+        data = {'code': 'Australia'}
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Carrier.objects.count(), 5)
+        # self.assertEqual(Carrier.objects.get().code, 'Australia')
+        print("Test Create Carrier Passed")
+
+    def test_get_all_carrier(self):
+        response = self.client.get(reverse('carrier-list'))
+        carrier = Carrier.objects.all()
+        serializer = CarrierSerializer(carrier, many=True)
+        self.assertEqual(response.data, serializer.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(carrier.count(), 4)
+        print("Test get all carrier passed")
+
+    def test_get_carrier_by_id(self):
+        carrier = Carrier.objects.filter(description='India').first()
+        url = '/api/carrier/' + str(carrier.id) + '/'
+        response = self.client.get(url)
+        serializer = CarrierSerializer(carrier)
+        self.assertEqual(serializer.data, response.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        print("Test get carrier by id passed")
+
+    def test_update_carrier(self):
+        carrier = Carrier.objects.filter(code='India').first()
+        data = {"code": "eengsss"}
+        url = '/api/carrier/' + str(carrier.id) + '/'
+        response = self.client.put(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['code'], 'eengsss')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        print("Test Update carrier")
+
+    def test_patch_carrier(self):
+        carrier = Carrier.objects.create(description="england")
+        data = {'description': 'englanssss'}
+        url = '/api/carrier/' + str(carrier.id) + '/'
+        response = self.client.patch(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['description'], 'englanssss')
+        self.assertEqual(Carrier.objects.all().count(), 5)
+        print("Test Patch carrier Passed")
+
+    def test_delete_carrier(self):
+        carrier = Carrier.objects.create(description="england")
+        url = '/api/carrier/' + str(carrier.id) + '/'
+        response = self.client.delete(url, format='json')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        print("Test delete carrier passed")
+
+
+class CalculatorTests(APITestCase, URLPatternsTestCase):
+    urlpatterns = [
+        path('api/', include('api.urls')),
+    ]
+
+    def setUp(self):
+        user = User.objects.create(email='kami@gmail.com', password="demo")
+        self.client.force_authenticate(user=user)
+
+        Calculator.objects.create(
+            name='Australia')
+        Calculator.objects.create(
+            name='India')
+        Calculator.objects.create(
+            name='Pakistan')
+        Calculator.objects.create(
+            name='Sri lanka')
+
+    def test_create_calculator(self):
+        url = reverse('calculator-list')
+        data = {'name': 'Australia'}
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Calculator.objects.count(), 5)
+        # self.assertEqual(Comodity.objects.get().name, 'Australia')
+        print("Test Create  Passed")
+
+    def test_get_all_calculator(self):
+        response = self.client.get(reverse('calculator-list'))
+        calculator = Calculator.objects.all()
+        serializer = CalculatorSerializer(calculator, many=True)
+        self.assertEqual(response.data, serializer.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(calculator.count(), 4)
+        print("Test get all Calculator passed")
+
+    def test_get_calculator_by_id(self):
+        calculator = Calculator.objects.filter(name='India').first()
+        url = '/api/calculator/' + str(calculator.id) + '/'
+        response = self.client.get(url)
+        serializer = CalculatorSerializer(calculator)
+        self.assertEqual(serializer.data, response.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        print("Test get Calculator by id passed")
+
+    def test_update_calculator(self):
+        calculator = Calculator.objects.filter(name='India').first()
+        data = {"name": "eengsss"}
+        url = '/api/calculator/' + str(calculator.id) + '/'
+        response = self.client.put(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['name'], 'eengsss')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        print("Test Update Calculator")
+
+    def test_patch_calculator(self):
+        calculator = Calculator.objects.create(name="england")
+        data = {'name': 'englanssss'}
+        url = '/api/calculator/' + str(calculator.id) + '/'
+        response = self.client.patch(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['name'], 'englanssss')
+        self.assertEqual(Calculator.objects.all().count(), 5)
+        print("Test Patch Calculator Passed")
+
+    def test_delete_calculator(self):
+        calculator = Calculator.objects.create(name="england")
+        url = '/api/calculator/' + str(calculator.id) + '/'
+        response = self.client.delete(url, format='json')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        print("Test delete calculator passed")
+
+
+class ChargeCodeTests(APITestCase, URLPatternsTestCase):
+    urlpatterns = [
+        path('api/', include('api.urls')),
+    ]
+
+    def setUp(self):
+        user = User.objects.create(email='kami@gmail.com', password="demo")
+        self.client.force_authenticate(user=user)
+
+        ChargeCode.objects.create(
+            name='Australia')
+        ChargeCode.objects.create(
+            name='India')
+        ChargeCode.objects.create(
+            name='Pakistan')
+        ChargeCode.objects.create(
+            name='Sri lanka')
+
+    def test_create_charge_code(self):
+        url = reverse('chargecode-list')
+        data = {'name': 'Australia'}
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(ChargeCode.objects.count(), 5)
+        # self.assertEqual(Comodity.objects.get().name, 'Australia')
+        print("Test Create  Passed")
+
+    def test_get_all_charge_code(self):
+        response = self.client.get(reverse('chargecode-list'))
+        charge_code = ChargeCode.objects.all()
+        serializer = ChargeCodeSerializer(charge_code, many=True)
+        self.assertEqual(response.data, serializer.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(charge_code.count(), 4)
+        print("Test get all ChargeCode passed")
+
+    def test_get_charge_code_by_id(self):
+        charge_code = ChargeCode.objects.filter(name='India').first()
+        url = '/api/chargecode/' + str(charge_code.id) + '/'
+        response = self.client.get(url)
+        serializer = ChargeCodeSerializer(charge_code)
+        self.assertEqual(serializer.data, response.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        print("Test get charge_code by id passed")
+
+    def test_update_charge_code(self):
+        charge_code = ChargeCode.objects.filter(name='India').first()
+        data = {"name": "eengsss"}
+        url = '/api/chargecode/' + str(charge_code.id) + '/'
+        response = self.client.put(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['name'], 'eengsss')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        print("Test Update charge_code")
+
+    def test_patch_charge_code(self):
+        charge_code = ChargeCode.objects.create(name="england")
+        data = {'name': 'englanssss'}
+        url = '/api/chargecode/' + str(charge_code.id) + '/'
+        response = self.client.patch(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['name'], 'englanssss')
+        self.assertEqual(ChargeCode.objects.all().count(), 5)
+        print("Test Patch Calculator Passed")
+
+    def test_delete_charge_code(self):
+        charge_code = ChargeCode.objects.create(name="england")
+        url = '/api/chargecode/' + str(charge_code.id) + '/'
+        response = self.client.delete(url, format='json')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        print("Test delete calculator passed")
